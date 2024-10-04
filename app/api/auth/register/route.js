@@ -1,3 +1,5 @@
+//app/api/auth/register/route.js
+
 import { hash } from 'bcryptjs';
 import prisma from '../../../../lib/prisma';
 

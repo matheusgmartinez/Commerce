@@ -1,3 +1,5 @@
+//app/login/page.js
+
 'use client'
 
 import { useState } from 'react';
@@ -18,10 +20,18 @@ export default function Login() {
     });
 
     if (res.ok) {
-      router.push('/dashboard');
+      const data = await res.json(); // Agora, os dados do usuário estão na resposta
+      const { user, token } = data; // Extraindo os dados do usuário e o token
+      localStorage.setItem('user', JSON.stringify(user)); // Salvando os dados do usuário no localStorage
+      localStorage.setItem('token', token); // Salvando o token no localStorage, se necessário
+    
+      // Disparando o evento de login
+      window.dispatchEvent(new Event('userLoggedIn'));
+    
+      router.push('/'); // Redirecionando para a home
     } else {
       console.error('Erro ao fazer login');
-    }
+    }    
   };
 
   return (

@@ -1,3 +1,5 @@
+//app/register/page
+
 'use client'
 
 import { useState } from 'react';
@@ -12,16 +14,16 @@ export default function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const res = await fetch('/site/register', {
+    const res = await fetch('/api/auth/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ name, email, password }),
-    });    
+    }); 
 
     if (res.ok) {
-      router.push('/site/login');
+      router.push('/login');
     } else {
       console.error('Erro ao registrar usuário');
     }

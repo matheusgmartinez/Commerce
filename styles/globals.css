@@ -1,3 +1,17 @@
 header {
     background-color: aqua;
 }
+
+.product-card {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 16px;
+    margin: 10px 0;
+    background-color: #f9f9f9;
+    transition: box-shadow 0.3s;
+  }
+  
+  .product-card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  

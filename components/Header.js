@@ -55,6 +55,8 @@ export default function Header() {
 
         <a href="/cart">Cart</a>
 
+        <a href="/orders">Pedidos</a>
+
         {/* Verifica se o usuário está logado */}
         {user ? (
           <>

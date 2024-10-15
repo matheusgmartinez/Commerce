@@ -31,3 +31,32 @@ model Product {
   weight      Float?   // Peso em kg
   createdAt   DateTime @default(now())
 }
+
+model Order {
+  id             Int             @id @default(autoincrement())
+  products       ProductOrder[]
+  shippingData   ShippingData?   @relation // Relação opcional com ShippingData
+  paymentMethod  String
+  createdAt      DateTime        @default(now())
+}
+
+model ProductOrder {
+  id          Int     @id @default(autoincrement())
+  orderId     Int
+  productId   Int
+  quantity    Int
+  price       Float
+  productName String  // Adiciona o nome do produto
+  order       Order   @relation(fields: [orderId], references: [id])
+}
+
+
+model ShippingData {
+  id         Int     @id @default(autoincrement())
+  orderId    Int     @unique // Adicionar @unique para garantir a unicidade
+  name       String
+  address    String
+  postalCode String
+  city       String
+  order      Order    @relation(fields: [orderId], references: [id]) // Relação obrigatória
+}

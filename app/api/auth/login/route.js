@@ -1,7 +1,7 @@
 //app/api/auth/login/route.js
 
 import { compare } from 'bcryptjs';
-import prisma from '../../../../lib/prisma';
+import prisma from '../../../../prisma/prisma';
 import jwt from 'jsonwebtoken';
 
 export async function POST(req) {

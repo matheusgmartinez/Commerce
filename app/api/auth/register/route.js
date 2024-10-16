@@ -1,7 +1,7 @@
 //app/api/auth/register/route.js
 
 import { hash } from 'bcryptjs';
-import prisma from '../../../../lib/prisma';
+import prisma from '../../../../prisma/prisma';
 
 export async function POST(req) {
   const { name, email, password } = await req.json(); // Extraindo os dados do corpo da requisição

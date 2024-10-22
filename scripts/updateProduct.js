@@ -3,7 +3,7 @@ const prisma = new PrismaClient();
 
 async function main() {
   const productId = 12; // ID do produto que você deseja atualizar
-  const newImageUrl = '/products/teste.jpeg'; // A nova URL da imagem
+  const newImageUrl = '/products/calça.png'; // A nova URL da imagem
 
   // Atualizando o produto
   const updatedProduct = await prisma.product.update({

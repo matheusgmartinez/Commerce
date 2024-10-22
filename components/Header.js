@@ -1,21 +1,21 @@
+// /components/Header.js
 'use client';
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
 export default function Header() {
-  const [user, setUser] = useState(null); // Estado para armazenar o usuário logado
-  const [categories, setCategories] = useState([]); // Estado para armazenar as categorias
+  const [user, setUser] = useState(null);
+  const [categories, setCategories] = useState([]);
+  const [searchQuery, setSearchQuery] = useState(''); // Estado para armazenar a busca
   const router = useRouter();
 
-  // Checa se o usuário está logado ao carregar o componente
   useEffect(() => {
     const loggedInUser = localStorage.getItem('user');
     if (loggedInUser) {
-      setUser(JSON.parse(loggedInUser)); // Atualiza o estado com o usuário logado
+      setUser(JSON.parse(loggedInUser));
     }
 
-    // Função para buscar categorias dinâmicas da API
     const fetchCategories = async () => {
       try {
         const response = await fetch('/api/categories');
@@ -26,14 +26,21 @@ export default function Header() {
       }
     };
 
-    fetchCategories(); // Chama a função para buscar as categorias
+    fetchCategories();
   }, []);
 
-  // Função para deslogar o usuário
   const handleLogout = () => {
-    localStorage.removeItem('user'); // Remove o usuário do localStorage
-    setUser(null); // Reseta o estado do usuário
-    router.push('/login'); // Redireciona para a página de login
+    localStorage.removeItem('user');
+    setUser(null);
+    router.push('/login');
+  };
+
+  // Função para lidar com a busca
+  const handleSearch = (e) => {
+    e.preventDefault(); // Previne o comportamento padrão do form
+    if (searchQuery.trim()) {
+      router.push(`/search?query=${searchQuery}`); // Redireciona para a página de busca
+    }
   };
 
   return (
@@ -42,7 +49,6 @@ export default function Header() {
       <nav>
         <a href="/">Home</a>
 
-        {/* Renderiza as categorias dinâmicas */}
         {categories.length > 0 ? (
           categories.map((category, index) => (
             <a key={index} href={`/category/${category}`}>
@@ -54,10 +60,8 @@ export default function Header() {
         )}
 
         <a href="/cart">Cart</a>
-
         <a href="/orders">Pedidos</a>
 
-        {/* Verifica se o usuário está logado */}
         {user ? (
           <>
             <span>Bem-vindo, {user.name}</span>
@@ -69,6 +73,17 @@ export default function Header() {
             <a href="/register">Register</a>
           </>
         )}
+
+        {/* Barra de busca */}
+        <form onSubmit={handleSearch}>
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Buscar produtos..."
+          />
+          <button type="submit">Buscar</button>
+        </form>
       </nav>
     </header>
   );
